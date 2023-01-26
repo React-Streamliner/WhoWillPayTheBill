@@ -1,14 +1,36 @@
 import React, { useState, useContext, useRef } from "react";
 import { Button, Form, Alert } from "react-bootstrap";
+import { MyContext } from "../context";
 
 const Stage1 = () => {
     const textInput = useRef()
+    const context = useContext(MyContext)
+    const [error, setError] = useState([false, ''])
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const value = textInput.current.value
-        console.log(value)
+        const validate = validateInput(value)
+        if (validate) {
+            setError([false, ''])
+            textInput.current.value = ''
+            context.addPlayer(value)
+        }
     }
+
+    const validateInput = (value) => {
+        if (value === '') {
+            setError([true, 'Sorry you need to add something'])
+            return false
+        } else if (value.length <= 2) {
+            setError([true, 'Sorry you need 3 characters at least'])
+            return false
+        }
+
+        return true
+    }
+
+    console.log(context.state)
 
     return (
         <>
@@ -21,6 +43,13 @@ const Stage1 = () => {
                         ref={textInput}
                     />
                 </Form.Group>
+                {
+                    error[0] ? 
+                    <Alert>
+                        {error[1]}
+                    </Alert> 
+                    : null
+                }
                 <Button className='miami' variant='primary' type='submit'>
                 Add Player
                 </Button>

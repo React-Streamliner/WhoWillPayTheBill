@@ -10,7 +10,6 @@ import Stage2 from "./components/stage_2";
 const App = () => {
   const context = useContext(MyContext)
 
-  console.log(context)
   return (
     <div className="wrapper">
       <div className="center-wrapper">
