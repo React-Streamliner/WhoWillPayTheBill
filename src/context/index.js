@@ -19,12 +19,19 @@ class MyProvider extends Component {
         }))
     }
 
+    removePlayer = (index) => {
+        var players = [...this.state.players];
+        players.splice(index, 1);
+        this.setState({players: players});
+    }
+
     render() {
         return(
             <>
                 <MyContext.Provider value={{
                     state: this.state,
-                    addPlayer: this.addPlayerHandler
+                    addPlayer: this.addPlayerHandler,
+                    removePlayer: this.removePlayer
                 }}>
                     {this.props.children}
                 </MyContext.Provider>
